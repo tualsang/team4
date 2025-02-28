@@ -1,0 +1,41 @@
+<%- include('../partials/header') %>
+
+<% if (successMessages.length > 0) { %>
+  <div class="flash-success">
+    <% successMessages.forEach(msg => { %>
+      <p><%= msg %></p>
+    <% }) %>
+  </div>
+<% } %>
+
+<% if (errorMessages.length > 0) { %>
+  <div class="flash-error">
+    <% errorMessages.forEach(msg => { %>
+      <p><%= msg %></p>
+    <% }) %>
+  </div>
+<% } %>
+
+<div class="centered-content">
+  <h1><%= item.title %></h1>
+  <img src="<%= item.image %>" alt="<%= item.title %>" class="item-images" />
+  <p>Price: $<%= item.price %></p>
+  <p>Condition: <%= item.condition %></p>
+  <p>Details: <%= item.details %></p>
+  <p>Seller: <%= item.seller ? item.seller.firstName + ' ' + item.seller.lastName : 'Unknown' %></p>
+
+  <% if (!item.active) { %>
+    <p>This item is no longer available.</p>
+  <% } %>
+
+  <% if (user && item.seller._id.toString() === user.toString()) { %>
+    <div class="buttons">
+      <a href="/items/<%= item._id %>/edit" class="button edit-button">Edit Item</a>
+      <form action="/items/<%= item._id %>?_method=DELETE" method="POST">
+        <button type="submit" class="button delete-button">Delete Item</button>
+      </form>
+    </div>
+  <% } %>
+</div>
+
+<%- include('../partials/footer') %>

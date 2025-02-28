@@ -1,0 +1,59 @@
+<%- include('../partials/header') %>
+  <% if (successMessages.length> 0) { %>
+    <div class="flash-success">
+      <% successMessages.forEach(msg=> { %>
+        <p>
+          <%= msg %>
+        </p>
+        <% }) %>
+    </div>
+    <% } %>
+
+      <% if (errorMessages.length> 0) { %>
+        <div class="flash-error">
+          <% errorMessages.forEach(msg=> { %>
+            <p>
+              <%= msg %>
+            </p>
+            <% }) %>
+        </div>
+        <% } %>
+
+          <body>
+            <form action="/items" method="GET">
+              <button type="submit" class="clear-results-btn">Clear Results</button>
+            </form>
+
+            <% if (items.length===0) { %>
+              <% if (searchKeyword) { %>
+                <p>No items found for "<%= searchKeyword %>". Try adjusting your search.</p>
+                <% } else { %>
+                  <p>No items are currently available.</p>
+                  <% } %>
+                    <% } %>
+
+                      <div class="items-container">
+                        <% items.forEach(item=> { %>
+                          <div class="item-card">
+                            <div class="image-wrapper">
+                              <img src="<%= item.image %>" alt="<%= item.title %>" class="item-image">
+                            </div>
+                            <hr class="divider">
+                            <h2 class="item-title">
+                              <a href="/items/<%= item.id %>">
+                                <%= item.title %>
+                              </a>
+                            </h2>
+                            <hr class="divider">
+                            <div class="item-details">
+                              <p class="item-price">Price: $<%= item.price %>
+                              </p>
+                              </p>
+                              <p class="item-condition">Condition: <%= item.condition %>
+                              </p>
+                            </div>
+                          </div>
+                          <% }) %>
+                      </div>
+          </body>
+          <%- include('../partials/footer') %>

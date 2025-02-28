@@ -1,0 +1,55 @@
+<%- include('../partials/header.ejs') %>
+
+<div class="profile-container">
+  <!-- Left Side: User Info -->
+  <div class="profile-header">
+    <h2>Welcome, <span class="user-name"><%= user.firstName %>!</span></h2>
+    <p class="user-email">📧 <%= user.email %></p>
+  </div>
+
+  <!-- Right Side: Listings -->
+  <% if (items && items.length > 0) { %>
+  <h2>Your Listings</h2>
+  <div class="items-wrapper">
+    <div class="items-row">
+      <!-- Changed from items-grid to items-row for horizontal alignment -->
+      <% items.forEach(item => { %>
+      <div class="item-card">
+        <!-- Item Image -->
+        <% if (item.image) { %>
+        <div class="item-image-wrapper">
+          <img
+            src="<%= item.image %>"
+            alt="<%= item.title %>"
+            class="item-image"
+          />
+        </div>
+        <% } %>
+
+        <!-- Item Info -->
+        <div class="item-info">
+          <a href="/items/<%= item._id %>" class="item-title">
+            <strong><%= item.title %></strong>
+          </a>
+          <p class="item-price">Price: $<%= item.price %></p>
+        </div>
+
+        <!-- Item Actions -->
+        <div class="item-actions">
+          <form action="/items/<%= item._id %>/edit?_method=GET" method="POST">
+            <button type="submit" class="button edit-button">✏️ Edit</button>
+          </form>
+          <form action="/items/<%= item._id %>?_method=DELETE" method="POST">
+            <button type="submit" class="button delete-button">🗑 Delete</button>
+          </form>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+  <% } else { %>
+  <p class="no-items">😞 You have not created any items yet.</p>
+  <% } %>
+</div>
+
+<%- include('../partials/footer.ejs') %>
