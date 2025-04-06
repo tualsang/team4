@@ -1,0 +1,38 @@
+<%- include('../partials/header') %>
+
+<div class="centered-content">
+  <h1>Your Cart</h1>
+
+  <% if (cartItems && cartItems.length > 0) { %>
+    <ul class="cart-items-list">
+      <% cartItems.forEach(function(item) { %>
+        <li class="cart-item">
+          <div class="cart-item-content">
+            <img src="<%= item.image %>" alt="<%= item.title %>" class="cart-item-image">
+            <div class="cart-item-info">
+              <h2 class="cart-item-title"><%= item.title %></h2>
+              <p class="cart-item-price">$<%= item.price %></p>
+            </div>
+          </div>
+          <form action="/users/cart/<%= item._id %>/remove" method="POST">
+            <button type="submit" class="remove-button">Remove</button>
+          </form>
+        </li>
+      <% }) %>
+    </ul>
+
+    <!-- Display Total Price -->
+    <div class="total-price">
+      <h3>Total Price: $<%= totalPrice %></h3>
+    </div>
+
+    <!-- Purchase button -->
+    <form action="/users/cart/purchase" method="POST">
+      <button type="submit" class="purchase-button">Purchase</button>
+    </form>
+  <% } else { %>
+    <p>Your cart is empty.</p>
+  <% } %>
+</div>
+
+<%- include('../partials/footer') %>

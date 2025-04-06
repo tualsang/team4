@@ -1,0 +1,91 @@
+<%- include('../partials/header') %>
+
+<% if (successMessages.length > 0) { %>
+  <div class="flash-success">
+    <% successMessages.forEach(msg => { %>
+      <p><%= msg %></p>
+    <% }) %>
+  </div>
+<% } %>
+
+<% if (errorMessages.length > 0) { %>
+  <div class="flash-error">
+    <% errorMessages.forEach(msg => { %>
+      <p><%= msg %></p>
+    <% }) %>
+  </div>
+<% } %>
+
+<!-- Filter Form -->
+<div style="margin: 20px 0; text-align: center;">
+  <form action="/items" method="GET" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; align-items: flex-end;">
+    <label><strong>Filter:</strong></label>
+
+    <div>
+      <label for="category">Category</label><br />
+      <select name="category" id="category" style="padding: 6px;">
+        <option value="All" <%= selectedCategory === 'All' ? 'selected' : '' %>>All</option>
+        <option value="Electronics" <%= selectedCategory === 'Electronics' ? 'selected' : '' %>>Electronics</option>
+        <option value="Books" <%= selectedCategory === 'Books' ? 'selected' : '' %>>Books</option>
+        <option value="Clothing" <%= selectedCategory === 'Clothing' ? 'selected' : '' %>>Clothing</option>
+        <option value="Home" <%= selectedCategory === 'Home' ? 'selected' : '' %>>Home</option>
+        <option value="Other" <%= selectedCategory === 'Other' ? 'selected' : '' %>>Other</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="condition">Condition</label><br />
+      <select name="condition" id="condition" style="padding: 6px;">
+        <option value="">All</option>
+        <option value="New" <%= selectedCondition === 'New' ? 'selected' : '' %>>New</option>
+        <option value="Used" <%= selectedCondition === 'Used' ? 'selected' : '' %>>Used</option>
+        <option value="Refurbished" <%= selectedCondition === 'Refurbished' ? 'selected' : '' %>>Refurbished</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="sort">Sort by Price</label><br />
+      <select name="sort" id="sort" style="padding: 6px;">
+        <option value="asc" <%= sortOrder === 'asc' ? 'selected' : '' %>>Low to High</option>
+        <option value="desc" <%= sortOrder === 'desc' ? 'selected' : '' %>>High to Low</option>
+      </select>
+    </div>
+
+    <div style="display: flex; gap: 10px;">
+      <button type="submit" style="padding: 8px 16px;">Apply</button>
+      <a href="/items" class="clear-results-btn" style="text-decoration: none; padding: 8px 16px; background: #6c2bd9; color: white; border-radius: 4px;">Clear</a>
+    </div>
+  </form>
+</div>
+
+<!-- Items Grid -->
+<div class="content-wrapper" style="margin-top: 10px;">
+  <% if (items.length === 0) { %>
+    <% if (searchKeyword) { %>
+      <p>No items found for "<%= searchKeyword %>". Try adjusting your search.</p>
+    <% } else { %>
+      <p>No items are currently available.</p>
+    <% } %>
+  <% } %>
+
+  <div class="items-container">
+    <% items.forEach(item => { %>
+      <div class="item-card">
+        <div class="image-wrapper">
+          <img src="<%= item.image %>" alt="<%= item.title %>" class="item-image">
+        </div>
+        <hr class="divider">
+        <h2 class="item-title">
+          <a href="/items/<%= item.id %>"><%= item.title %></a>
+        </h2>
+        <hr class="divider">
+        <div class="item-details">
+          <p class="item-price">Price: $<%= item.price %></p>
+          <p class="item-condition">Condition: <%= item.condition %></p>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

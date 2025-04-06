@@ -1,0 +1,61 @@
+<%- include('../partials/header') %>
+
+<div class="sell-container">
+  <h1 class="sell-title">Sell Your Item</h1>
+
+  <div class="form-wrapper">
+    <form
+      action="/items"
+      method="POST"
+      enctype="multipart/form-data"
+      class="sell-form"
+    >
+      <div class="form-group">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required />
+      </div>
+
+      <div class="form-group">
+        <label for="image">Upload Image:</label>
+        <input type="file" id="image" name="image" accept="image/*" required />
+      </div>
+
+      <div class="form-group">
+        <label for="condition">Condition:</label>
+        <select id="condition" name="condition" required>
+          <option value="New">New</option>
+          <option value="Used">Used</option>
+          <option value="Refurbished">Refurbished</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="category">Category</label>
+        <select name="category" id="category" required>
+          <option value="">-- Select Category --</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Books">Books</option>
+          <option value="Clothing">Clothing</option>
+          <option value="Home">Home</option>
+          <option value="Other">Other</option>
+        </select>
+        <% if (errors && errors.category) { %>
+        <span class="text-danger"><%= errors.category.msg %></span>
+        <% } %>
+      </div>
+
+      <div class="form-group">
+        <label for="price">Price ($):</label>
+        <input type="number" id="price" name="price" step="0.01" required />
+      </div>
+
+      <div class="form-group">
+        <label for="details">Details:</label>
+        <textarea id="details" name="details" rows="4" required></textarea>
+      </div>
+
+      <button type="submit" class="sell-button">Add Item</button>
+    </form>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

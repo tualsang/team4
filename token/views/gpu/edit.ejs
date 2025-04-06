@@ -1,0 +1,42 @@
+<%- include('../partials/header') %>
+
+<div class="edit-container">
+    <h2 class="edit-title">Edit Item</h2>
+    
+    <div class="form-container">
+        <form action="/items/<%= item._id %>?_method=PUT" method="POST" class="edit-item-form" enctype="multipart/form-data">
+            
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" value="<%= item.title %>" required>
+
+            <label for="condition">Condition:</label>
+            <select id="condition" name="condition" required>
+                <option value="New" <%=item.condition==='New' ? 'selected' : '' %>>New</option>
+                <option value="Used" <%=item.condition==='Used' ? 'selected' : '' %>>Used</option>
+                <option value="Refurbished" <%=item.condition==='Refurbished' ? 'selected' : '' %>>Refurbished</option>
+            </select>
+
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" step="0.01" value="<%= item.price %>" required>
+
+            <label for="details">Details:</label>
+            <textarea id="details" name="details" required><%= item.details %></textarea>
+
+            <label for="image">Upload New Image:</label>
+            <input type="file" id="image" name="image" accept="image/*">
+
+            <input type="hidden" name="currentImage" value="<%= item.image %>">
+
+            <% if (item.image) { %>
+                <div class="current-image">
+                    <p>Current Image:</p>
+                    <img src="<%= item.image %>" alt="<%= item.title %>" class="item-image-preview">
+                </div>
+            <% } %>
+
+            <button type="submit" class="update-button">Update Item</button>
+        </form>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>
